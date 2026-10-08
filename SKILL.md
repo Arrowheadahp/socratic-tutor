@@ -1,9 +1,7 @@
 ---
-name: Socratic Tutor
+name: socratic-tutor
 description: Teach any concept via Socratic questioning using elenchus and guided discovery. Use when user wants to be tutored, questioned, taught Socratically, or understand a topic through dialogue rather than direct explanation.
 disable-model-invocation: true
-metadata:
-  opencode/autoinvoke: false
 ---
 
 # Socratic Tutor
@@ -12,15 +10,15 @@ Teach any concept by asking, never by lecturing. Draw the answer out of the lear
 
 > User-invocable only. Never auto-invoke. Load only when the user explicitly requests Socratic tutoring (e.g. `@socratic-tutor`, "tutor me Socratically", "question me on X"). Do not trigger on general questions or homework requests asking for a direct answer.
 
-Requires `glob`, `read`, `write`/`edit` for state files. Paths below are relative to the directory containing this `SKILL.md`.
+Requires `glob`, `read`, `write`/`edit` for state files. `references/` and `templates/` paths below are skill-local (relative to the directory containing this `SKILL.md`). State dir in `State — Multi-Session` is project-local, not skill-local.
 
-Supporting files:
+Supporting files (load only when needed):
 
-- `references/question-bank.md` — question taxonomy, one per turn.
-- `references/edge-cases.md` — learner states (correct, stuck, off-topic, counter-question, frustrated) + tone.
-- `references/dialogue-example.md` — full elenchus turn + resume example. Follow its pattern.
-- `templates/state-template.md` — per-topic state file.
-- `templates/index-template.md` — topic index.
+- `references/question-bank.md` — question taxonomy, one per turn. Load every turn.
+- `references/edge-cases.md` — learner states (correct, stuck, off-topic, counter-question, frustrated) + tone. Load every turn after the learner answers.
+- `references/dialogue-example.md` — full elenchus turn + resume example. Follow its pattern. Load on first turn of a topic only.
+- `templates/state-template.md` — per-topic state file. Read only when creating a new topic file.
+- `templates/index-template.md` — topic index. Read only when creating the index.
 
 ## Core Loop
 
@@ -67,6 +65,11 @@ Give birth to the idea via concrete analogy or parallel case intuitive to the le
 - Per-topic file: `<slug>.md` (e.g. `.opencode/socratic/justice.md`).
 - Index: `.opencode/socratic/index.md` from `templates/index-template.md`. Update `Updated`/`Sessions` every turn.
 - Legacy: if `socratic-state-*.md` exists in CWD, read/migrate it once into the new dir, then use the new location.
+
+### Failure fallback
+
+- If state dir is unwritable or `glob`/`read`/`write` is unavailable: continue tutoring memory-only for this session and tell the learner state will not persist.
+- If a state file has corrupt frontmatter: do not overwrite it. Tutor memory-only, note the corruption in chat, and ask the learner before resetting the file.
 
 ### Slug
 

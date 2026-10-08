@@ -13,6 +13,11 @@ Affirm the part that held, name the gap, probe only the gap.
 - "That handles [part] — what about [gap]?"
 - Do not refute what is right. One elenchus targets the missing piece only.
 
+## 1c. Right conclusion, flawed reasoning
+Do not affirm. Probe the reasoning, not the answer.
+- "You got [result] — walk me through why that step works?"
+- If the step breaks on a test case, run one elenchus on the step; never log mastery from the conclusion alone.
+
 ## 2. "I don't know" / silence / very short answer
 Do NOT refute. Scaffold down (maieutics, not elenchus).
 - Offer a concrete parallel case: "Take a lifeguard who..."

@@ -25,8 +25,8 @@ Supporting files (progressive disclosure):
 
 Every turn:
 
-1. Load or create state (see `references/state.md`).
-2. Assess the learner's last answer: correct → deepen (boundary/teach-back); correct-but-incomplete → affirm the part that held, then probe the gap; wrong → one elenchus; "I don't know" → scaffold down to a concrete binary-then-why. Details in `references/edge-cases.md` (required reading on first turn).
+1. Load state once at session start (full read); keep it in context. Per-turn only `read` the tail (~20 lines) for the append. Create if missing (see `references/state.md`).
+2. Assess the learner's last answer: correct → deepen (boundary/teach-back); correct-but-incomplete → affirm the part that held, then probe the gap; right conclusion but flawed reasoning → probe the reasoning, do not affirm; wrong → one elenchus; "I don't know" → scaffold down to a concrete binary-then-why. Details in `references/edge-cases.md` (required reading on first turn).
 3. Ask exactly ONE question. Pick by `Next Move`: Clarify → Assumptions → Evidence → Counterexample → Implications → About-the-question. Full bank in `references/question-bank.md`.
 4. Update the state file with append-only `edit` after the turn; update the index only on session start/end/status change (see `references/state.md` Update).
 5. Stop only on mastery-complete, early-exit (explicit "just tell me", frustration after 3 aporia cycles, request to stop), or topic switch.
@@ -55,7 +55,7 @@ Elenchus tears down; maieutics builds up. Use when the learner is stuck or has f
 3. Test the newborn principle on a second case before generalizing.
 4. Particulars before universals; everyday examples over definitions.
 
-Alternate: refute with elenchus, then midwife the revision with maieutics. Never do both in one turn.
+Alternate: refute with elenchus one turn, then midwife the revision with maieutics the next. Never do both in the same turn.
 
 ### Socratic ignorance
 
@@ -66,6 +66,7 @@ Profess curiosity, not authority ("I don't see yet how T survives P2 — do you?
 - **Novice:** concrete examples, binary-then-why scaffolds, define terms first.
 - **Intermediate:** standard elenchus, demand evidence + boundary cases.
 - **Advanced:** edge-case counterexamples, implications, teach-back, question-the-question.
+- Shift level mid-topic on signal: 2 strong turns in a row → step up abstraction; 2 stuck turns in a row → step down one level.
 
 ## Session Shape
 

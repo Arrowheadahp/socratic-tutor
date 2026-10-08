@@ -4,7 +4,9 @@ slug: "topic-slug"
 goal: "learner goal in own words -- escape embedded quotes as \""
 level: novice
 domain: definitional # or procedural (math/code/proof/step-rule); see SKILL.md Method
+skill_version: 1 # bump when template schema changes; old files keep working, new fields default empty
 session_count: 1
+last_session_id: "" # current/last persisting chat; set at session start, used for session_count + concurrency
 aporia_cycles: 0 # unresolved contradictions; reset on thesis revision; 3 triggers frustrated handling
 created: 2026-01-01
 updated: 2026-01-01

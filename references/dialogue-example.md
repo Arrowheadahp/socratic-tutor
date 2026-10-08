@@ -14,7 +14,7 @@ Learner thesis T: "Courage is endurance."
 >
 > Apply the turn update with append-only `edit` (canonical protocol in `references/state.md` Update): `oldString` is the tail anchor only (`<!-- end-log -->` + 2-3 lines above). Never use whole-file `oldString`, prior Turns, `replaceAll: true`, or `write` to update. Never reword a prior turn.
 >
-> Minimal shape:
+> Minimal shape (insert before `<!-- end-log -->`):
 >
 > ```
 > ### Turn 3 (Session 1, 2026-09-20)
@@ -24,25 +24,7 @@ Learner thesis T: "Courage is endurance."
 > <!-- end-log -->
 > ```
 >
-> ```diff
->  ## Current Hypothesis (rewrite allowed)
-> -- <courage is endurance>
-> +- <courage is wise endurance>
-> +## Hypothesis History (append-only, never rewrite)
-> +- v1 (Session 1, 2026-09-20): courage is endurance
-> +- v2 (Session 1, 2026-09-20): courage is wise endurance -- revised after foolish-endurance counterexample
->  ## Misconceptions
-> -- <none yet>
-> +- [active] courage=endurance -- fails exclusion (foolish endurance)
->  ## Next Move
-> -- <none yet>
-> +- Clarify revised definition to exclude ignorant endurance
->  ## Dialogue Log (append-only, insert before <!-- end-log -->)
-> +### Turn 2 (Session 1, 2026-09-20)
-> +Q: If foolish endurance is not fine but courage is fine, how would you revise "courage is endurance"?
-> +A: Learner conceded ignorant endurance is foolish, T as stated fails exclusion.
-> +Assessment: P1 (courage is fine) held; T broke on counterexample.
-> ```
+> Also rewrite `Current Hypothesis`, append `Hypothesis History` vN + `Misconceptions` line, set `Next Move`.
 >
 > Then update `updated` frontmatter. Sync `index.md` on session start/end/status change — not every turn.
 >

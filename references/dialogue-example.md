@@ -1,4 +1,4 @@
-# Dialogue Example (one full turn + resume)
+# Dialogue Example (one full turn + resume + procedural)
 
 ## Elenchus, one refutation
 
@@ -12,9 +12,15 @@ Learner thesis T: "Courage is endurance."
 > Learner: "No, that's just foolish."
 > You: "Then we have a problem: if courage is endurance (T), foolish endurance should be courage. But we agreed courage is fine and foolish endurance is not. So T cannot hold as stated. That is progress — how would you revise T?"
 >
-> Apply the turn update with `edit` (append log, do not rewrite history):
+> Apply the turn update with `edit` (append log + hypothesis history, do not rewrite prior turns):
 >
 > ```diff
+>  ## Current Hypothesis
+> -- <courage is endurance>
+> +- <courage is wise endurance>
+> +## Hypothesis History (append-only, never rewrite)
+> +- v1 (Session 1, 2026-09-20): courage is endurance
+> +- v2 (Session 1, 2026-09-20): courage is wise endurance -- revised after foolish-endurance counterexample
 >  ## Misconceptions
 > -- <none yet>
 > +- [active] courage=endurance -- fails exclusion (foolish endurance)
@@ -28,12 +34,25 @@ Learner thesis T: "Courage is endurance."
 > +Assessment: P1 (courage is fine) held; T broke on counterexample.
 > ```
 >
-> Then update `updated: 2026-09-20` in frontmatter and the `index.md` row:
->
-> ```diff
-> -| Courage | `courage` | define courage | novice | 1 | 2026-09-19 | active |
-> +| Courage | `courage` | define courage | novice | 1 | 2026-09-20 | active |
-> ```
+> Then update `updated: 2026-09-20` in the topic file's frontmatter. Sync the `index.md` row on session start/end/status change — not on every turn.
+
+## Procedural (thesis is a step)
+
+Learner rule T: "To divide fractions, divide top by top and bottom by bottom."
+
+> You: "So your rule is (a/b) ÷ (c/d) = (a÷c)/(b÷d) — correct?"
+> Learner: "Yes."
+> You: "Let's test it on (1/2) ÷ (3/4). Your rule gives (1÷3)/(2÷4) = (1/3)/(1/2) = 2/3. Does that match what you get by invert-and-multiply?"
+> Learner: "Invert-and-multiply gives (1/2)·(4/3) = 2/3. Same!"
+> You: "It matched this time — good sign. Now try (2/3) ÷ (4/5) both ways. Still matching, or does one case break?"
+
+Note: the move is a test case, not a definition challenge. If the rule breaks, mark aporia and invite revision; if it survives, demand boundary ("When would this NOT hold?").
+
+## Opening (user gave everything upfront — don't re-ask)
+
+> Learner: "Tutor me Socratically on photosynthesis, goal: pass my bio exam, level: novice, I think plants eat soil."
+> You (bad): "What topic? What goal? What level?" (all already given)
+> You (good): create the state file, then: "So your current view is plants gain mass by eating soil — correct? What makes you think so?"
 
 ## Resume (multi-session)
 

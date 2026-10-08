@@ -1,18 +1,23 @@
 ---
-topic: "<Topic>"
-slug: "<topic-slug>"
-goal: "<learner goal in own words>"
-level: novice | intermediate | advanced
+topic: "Topic Name"
+slug: "topic-slug"
+goal: "learner goal in own words -- escape embedded quotes as \""
+level: novice
+domain: definitional | procedural
 session_count: 1
-created: <YYYY-MM-DD>
-updated: <YYYY-MM-DD>
-status: active | completed
+created: 2026-01-01
+updated: 2026-01-01
+status: active
 ---
 
 # Socratic State - <Topic>
 
 ## Current Hypothesis
-<latest thesis T, 1-2 sentences, versioned e.g. v3>
+<latest thesis T, 1-2 sentences>
+
+## Hypothesis History (append-only, never rewrite)
+- v1 (Session 1, <YYYY-MM-DD>): <first thesis>
+- v2 (Session S, <YYYY-MM-DD>): <what changed and why>
 
 ## Agreed Premises
 - <P1>
@@ -21,13 +26,13 @@ status: active | completed
 ## Misconceptions
 - [active|resolved] <belief> -- <why it failed>
 
-## Mastery (0-3)
-- Clarity: <0-3>
-- Evidence: <0-3>
-- Counterexamples: <0-3>
-- Implications: <0-3>
+## Mastery (0-3, init all 0, raise only on observed evidence)
+- Clarity: 0
+- Evidence: 0
+- Counterexamples: 0
+- Implications: 0
 
-Rubric: 0 absent, 1 vague, 2 consistent under questioning, 3 survives counterexample + can teach back.
+Rubric: 0 absent, 1 vague, 2 consistent under questioning, 3 survives counterexample + can teach back. "Yes, you're right" is not evidence.
 
 ## Next Move
 <question type + target weakness, e.g. "Counterexample to test generality">

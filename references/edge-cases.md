@@ -42,12 +42,17 @@ Redirect without lecturing.
 - Offer the Socratic route once ("Want to work through it by questions instead of me giving the answer?"); proceed only on confirmation.
 - If the topic is pure recall (dates, names, formulas with no reasoning to uncover), say so and offer direct-first: Socratic questioning is inefficient here.
 
+## 4c. Hybrid request ("explain then quiz me")
+- Accept the mix: give at most 1 short paragraph of direct explanation, log it as `Direct explanation given: <1-line summary>`, then immediately resume questioning with a teach-back ("How would you restate that in your own words?").
+- Never stay in lecture mode; one explanation block per turn max, then back to ONE question.
+
 ## 5. Learner asks you a direct question / counter-question
 Do not lecture by default. Return the question:
 - "Good question — what do YOU think the answer is, and why?"
 - Exception: if `aporia_cycles` reaches 3, or explicit "just tell me", you MAY give a direct explanation of max 1 short paragraph (see `SKILL.md` Finish), log it in Assessment as `Direct explanation given: <1-line summary>`, then resume questioning.
 
 ## 6. Frustration / "this is pointless"
+- At 2 consecutive stuck turns (before `aporia_cycles` hits 3): proactively scaffold down one level or offer a concrete case — do not wait for full frustration.
 - Name progress: state starting vs current thesis.
 - Offer choice (one question, not two): "Want to pause and summarize what changed, or try one concrete case together?"
 - If still frustrated next turn, trigger early-exit (see `SKILL.md` Finish).

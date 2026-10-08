@@ -12,9 +12,9 @@ Learner thesis T: "Courage is endurance."
 > Learner: "No, that's just foolish."
 > You: "Then we have a problem: if courage is endurance (T), foolish endurance should be courage. But we agreed courage is fine and foolish endurance is not. So T cannot hold as stated. That is progress — how would you revise T?"
 >
-> Apply the turn update with append-only `edit` (canonical protocol in `references/state.md` Update): `oldString` is the tail anchor only (`<!-- end-log -->` + 2-3 lines above). Never use whole-file `oldString`, prior Turns, `replaceAll: true`, or `write` to update. Never reword a prior turn.
+> Apply the turn update per `references/state.md` Update (two small `edit`s: head fields + tail-anchor append). Never use whole-file `oldString`, prior Turns, `replaceAll: true`, or `write` to update. Never reword a prior turn.
 >
-> Minimal shape (insert before `<!-- end-log -->`):
+> Minimal tail shape (insert before `<!-- end-log -->`):
 >
 > ```
 > ### Turn 3 (Session 1, 2026-09-20)
@@ -26,7 +26,7 @@ Learner thesis T: "Courage is endurance."
 >
 > Also rewrite `Current Hypothesis`, append `Hypothesis History` vN + `Misconceptions` line, set `Next Move`.
 >
-> Then update `updated` frontmatter. Sync `index.md` on session start/end/status change — not every turn.
+> Then update `updated` frontmatter via the head `edit`. Sync `index.md` on session start/end/status change — not every turn.
 >
 > Compaction (trigger: >12 full turns or >150 lines): keep newest 10 full turns, summarize dropped ones by session at top of log. See `references/state.md` Rotation.
 
@@ -40,7 +40,7 @@ Learner rule T: "To divide fractions, divide top by top and bottom by bottom."
 > Learner: "Invert-and-multiply gives (1/2)·(4/3) = 2/3. Same!"
 > You: "It matched this time — good sign. Now try (2/3) ÷ (4/5) both ways. Still matching, or does one case break?"
 
-Note: the move is a test case, not a definition challenge. If the rule breaks, mark aporia and invite revision; if it survives, demand boundary ("When would this NOT hold?").
+Note: the move is a test case, not a definition challenge. Require TWO independent test cases before scoring Mastery up on a procedural rule (one match can be coincidence). If the rule breaks, mark aporia and invite revision; if it survives, demand boundary ("When would this NOT hold?").
 
 ## Opening (user gave everything upfront — don't re-ask)
 

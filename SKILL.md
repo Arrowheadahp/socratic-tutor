@@ -10,14 +10,14 @@ Teach any concept by asking, never by lecturing. Draw the answer out of the lear
 
 > User-invocable only. Never auto-invoke. Load only when the user explicitly requests Socratic tutoring (e.g. `@socratic-tutor`, "tutor me Socratically", "question me on X"). Do not trigger on general questions.
 
-Requires `glob`, `read`, `write`/`edit` for state files. `references/` and `templates/` paths below are skill-local (relative to the directory containing this `SKILL.md`). The state dir (see `references/state.md`) is user-global by default, not skill-local.
+Requires `glob`, `read`, `edit` for state files (`write` only to create a new topic file or index). `references/` and `templates/` paths below are skill-local (relative to the directory containing this `SKILL.md`). The state dir (see `references/state.md`) is user-global by default, not skill-local.
 
-Supporting files (progressive disclosure):
+Supporting files (progressive disclosure — load lazily to save tokens):
 
 - `references/state.md` — multi-session persistence (where, slug, start/resume, update, repair). Read at session start and when creating/switching topics.
-- `references/dialogue-example.md` — elenchus turn + resume + procedural example. Read on first turn of a topic.
+- `references/dialogue-example.md` — elenchus turn + resume + procedural example. Read on the first tutoring turn (after resume confirmed or topic file created), not on the resume-confirmation turn.
 - `references/question-bank.md` — full question taxonomy. On-demand only if Next Move is unclear or you need variety; the inlined rules below cover the common case.
-- `references/edge-cases.md` — full learner-state responses. Read on first turn of a topic; the inlined rules below cover the common case.
+- `references/edge-cases.md` — full learner-state responses. Read on the first tutoring turn; the inlined rules below cover the common case.
 - `templates/state-template.md` — per-topic state file. Read only when creating a new topic file.
 - `templates/index-template.md` — topic index. Read only when creating the index.
 
@@ -25,10 +25,10 @@ Supporting files (progressive disclosure):
 
 Every turn:
 
-1. Load state once at session start (full read); keep it in context. Per-turn only `read` the tail (~20 lines) for the append. Create if missing (see `references/state.md`).
-2. Assess the learner's last answer: correct → deepen (boundary/teach-back); correct-but-incomplete → affirm the part that held, then probe the gap; right conclusion but flawed reasoning → probe the reasoning, do not affirm; wrong → one elenchus; "I don't know" → scaffold down to a concrete binary-then-why. Details in `references/edge-cases.md` (required reading on first turn).
-3. Ask exactly ONE question. Pick by `Next Move`: Clarify → Assumptions → Evidence → Counterexample → Implications → About-the-question. Full bank in `references/question-bank.md`.
-4. Update the state file with append-only `edit` after the turn; update the index only on session start/end/status change (see `references/state.md` Update).
+1. Load state once at session start (head/frontmatter + Current Hypothesis + Next Move; full read only if file is small, else head ~30 lines + tail ~20 lines); keep it in context. Re-read the head every ~5 turns or when values feel stale. Do not write state for pre-creation Opening turns (no slug yet). Create file if missing (see `references/state.md`).
+2. Assess the learner's last answer: correct → deepen (boundary/teach-back); correct-but-incomplete → affirm the part that held, then probe the gap; right conclusion but flawed reasoning → probe the reasoning, do not affirm; wrong → one elenchus; "I don't know" → scaffold down to a concrete binary-then-why. Full mapping in `references/edge-cases.md` (read it on the first tutoring turn).
+3. Ask exactly ONE question. Pick by `Next Move` (the learner's current weakest dimension — Clarify, Assumptions, Evidence, Counterexample, Implications, Procedural, About-the-question — not a fixed sequence). Full bank in `references/question-bank.md`.
+4. Update the state file after each tutoring turn with two small `edit`s (head fields + tail log append); skip the write if nothing changed. Update the index only on session start/end/status change (see `references/state.md` Update).
 5. Stop only on mastery-complete, early-exit (explicit "just tell me", frustration after 3 aporia cycles, request to stop), or topic switch.
 
 Per-turn output shape: optional fair paraphrase (1 sentence) + max 2 short paragraphs + exactly ONE question ending with `?`. No second question hidden in the paragraphs.
@@ -44,7 +44,7 @@ Do not lecture, summarize theory, or give the answer unless Finish triggers.
 3. Offer concrete counterexample / parallel case (`P2`: "Ignorant endurance is not fine").
 4. State contradiction plainly, mark aporia as progress, invite revised thesis.
 
-For procedural topics (math, physics, code) the "thesis" is the learner's last step or proposed rule — refute the step with a test case (plug in numbers, trace the code, check units) rather than demanding a definition. Set `domain` at file creation: `procedural` if math/code/proof/step-rule, else `definitional`.
+For procedural topics (math, physics, code) the "thesis" is the learner's last step or proposed rule — refute the step with a test case (plug in numbers, trace the code, check units) rather than demanding a definition. Set `domain` at file creation: `procedural` if math/code/proof/step-rule, else `definitional`. Reclassify `domain` later if the topic turns out to be the other kind. If the learner holds two competing theses, track both in `Current Hypothesis` (T1 vs T2) and test one per turn.
 
 ### Maieutics (building up, complement to refutation)
 
@@ -66,7 +66,7 @@ Profess curiosity, not authority ("I don't see yet how T survives P2 — do you?
 - **Novice:** concrete examples, binary-then-why scaffolds, define terms first.
 - **Intermediate:** standard elenchus, demand evidence + boundary cases.
 - **Advanced:** edge-case counterexamples, implications, teach-back, question-the-question.
-- Shift level mid-topic on signal: 2 strong turns in a row → step up abstraction; 2 stuck turns in a row → step down one level.
+- Shift level mid-topic on signal: 2 strong turns in a row → step up abstraction; 2 stuck turns in a row → step down one level. Persist any shift in frontmatter `level` at the next state update so it survives across sessions.
 
 ## Session Shape
 

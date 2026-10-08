@@ -25,18 +25,19 @@ Legacy: if `socratic-state-*.md` exists in CWD, read/migrate it once into the ac
 
 ## Index repair
 
-- If `index.md` is missing but topic files exist: rebuild it by reading each file's frontmatter (`topic`, `slug`, `goal`, `level`, `session_count`, `updated`, `status`). Tell the learner you rebuilt it.
+- If `index.md` is missing but topic files exist: rebuild it with head-only reads (first ~15 lines: frontmatter `topic`, `slug`, `goal`, `level`, `session_count`, `updated`, `status`). Never full-read every file to rebuild. Tell the learner you rebuilt it.
 - If an index row points to a deleted file: drop the row and note it in chat.
 - If a topic file exists without an index row: add the row.
+- If the index grows past ~20 rows: keep all rows (history is never deleted) but only show the 5 most recent in chat; the rest stays in the file.
 
 ## Slug
 
-Lowercase kebab-case, 1-64 chars: `^[a-z0-9]+(-[a-z0-9]+)*$`. Normalize topic ("Justice & Fairness" → `justice-fairness`). On collision with a different topic/goal, append `-2`, `-3` and ask the learner to confirm the disambiguation (e.g. "You have `justice.md` about fairness and now justice-as-law — use `justice-2`?").
+Lowercase kebab-case, 1-64 chars: `^[a-z0-9]+(-[a-z0-9]+)*$`. Normalize topic ("Justice & Fairness" → `justice-fairness`). On collision with a different topic/goal, append `-2`, `-3` and ask the learner to confirm the disambiguation (e.g. "You have `justice.md` about fairness and now justice-as-law — use `justice-2`?"). For a broad topic that keeps spawning sub-questions, split into sub-slugs (`physics-kinematics`) rather than growing one file; link via `Suggested Next Topics` in the index.
 
 ## Start
 
 1. Glob active state dir + legacy `socratic-state-*.md` in CWD.
-2. Collect all matches with `status: active`. Sort by per-topic file frontmatter `updated` descending (file is source of truth; index is stale mid-session).
+2. Collect all matches with `status: active`. Sort by frontmatter `updated` descending using head-only reads (first ~15 lines) — do not full-read every file. The per-topic file's `updated` is source of truth; the index is stale mid-session.
    - If one match: read it, summarize Goal + Current Hypothesis (with version, e.g. v3) + Next Move + Updated date, ask learner to confirm/correct ("Is that still your view?"), then ask ONE resume question. See `references/dialogue-example.md`.
    - If multiple matches: list at most 5 (Topic + Updated + 1-line hypothesis) and ask the learner to pick one, or offer the most recent as default ("Resume `justice` from 2026-09-20, or pick another?"). Then follow the single-match resume.
    - If state older than ~14 days: offer quick review ("Want a 2-sentence recap or restart fresh?") before resuming.
@@ -46,32 +47,27 @@ Lowercase kebab-case, 1-64 chars: `^[a-z0-9]+(-[a-z0-9]+)*$`. Normalize topic ("
 
 ## Session identity
 
-- `session_count` increments once per new conversation, detected via `last_session_id` mismatch (see Start step 4). A new conversation = a different chat ID / resumed chat after a gap, not a topic switch within the same chat. If chat IDs are unavailable, use `updated` date gap + explicit resume confirmation as fallback.
+- `session_count` increments once per new conversation, detected via `last_session_id` mismatch (see Start step 4). A new conversation = a different chat ID / resumed chat after a gap, not a topic switch within the same chat. If chat IDs are unavailable, increment once when the learner confirms a resume after a gap AND the file `updated` date differs from today (same-day continuations do not increment).
 - Log timestamps as `YYYY-MM-DD`. Same-day turns share the date; ordering comes from monotonically increasing `Turn N`. Never reuse or rewrite a turn number.
 
 ## Update
 
-After EVERY turn, update the per-topic state file.
+After each tutoring turn, update the per-topic state file. Skip Opening elicitation turns before the topic file exists, and skip the write entirely if nothing changed this turn.
 
 Mutation types:
 
-- Rewrite allowed (in place): `Current Hypothesis`, `Agreed Premises`, `Mastery` (up or down, only on observed evidence), `Next Move`, `Remaining Uncertainties`, `updated`, frontmatter `session_count`/`status`/`aporia_cycles`/`last_session_id`.
+- Rewrite allowed (in place, only fields that changed): `Current Hypothesis`, `Agreed Premises`, `Mastery` (up or down, only on observed evidence), `Next Move`, `Remaining Uncertainties`, `goal` (if learner refines it), `level` (on adaptation shift), `domain` (on reclassification), `updated`, frontmatter `session_count`/`status`/`aporia_cycles`/`last_session_id`.
 - Append-only, never edit/delete/reword: `Hypothesis History` (`v1, v2...`), `Misconceptions` lines, and `Dialogue Log` full turns. To add a misconception, append a new line. To mark one resolved, append a new `[resolved]` line — do not edit the old `[active]` line.
 - `aporia_cycles`: increment by 1 each turn ending in unresolved contradiction; reset to 0 when the learner revises the thesis. At 3, follow frustrated-learner handling (see `references/edge-cases.md`).
 - Stall (no contradiction, no revision): if `Current Hypothesis` is unchanged for 3 consecutive turns (no new `Hypothesis History` version), scaffold down one abstraction level or offer a recap choice. Do not add a counter; derive from history + log.
 
-Single-rewrite preferred per turn (frontmatter + body stay in sync):
+Two small `edit`s per turn (head and tail are non-contiguous — never use a whole-file `oldString`):
 
-1. `read` the file tail (~20 lines) before the update.
-2. One `edit` covering frontmatter fields (`updated`, `aporia_cycles`, `last_session_id`, `status` if changed) + body + log append (see Append protocol below). Only split into two `edit`s if the tool cannot cover both regions in one call.
+1. Head `edit`: rewrite only the changed frontmatter/body fields above the log. `oldString` is the exact field lines; leave unchanged fields untouched.
+2. Tail `edit` (append protocol, use `edit`, never `write`, for updates): `read` the file tail (~20 lines) first. Set `oldString` to the stable tail anchor only (`<!-- end-log -->` plus the 2-3 lines above it). Set `newString` to anchor content + new block(s) inserted before `<!-- end-log -->`. Use `replaceAll: false`.
+3. On `edit` mismatch: re-`read` once and retry once with fresh text. On second failure: tutor memory-only for this turn and tell the learner state did not persist.
 
-Append protocol (use `edit`, never `write`, for updates):
-
-1. `read` the file tail (~20 lines) before the update.
-2. Set `oldString` to the stable tail anchor only (`<!-- end-log -->` plus the 2-3 lines above it). Set `newString` to anchor content + new block(s) inserted before `<!-- end-log -->`. Use `replaceAll: false`. Canonical example in `references/dialogue-example.md`.
-3. On `edit` mismatch: re-`read` once and retry once with a fresh tail. On second failure: tutor memory-only for this turn and tell the learner state did not persist.
-
-Verification: trust the `edit` tool result; full tail `read` only on mismatch or every 3rd turn to save tokens.
+Verification: trust the `edit` tool result; re-`read` the head every ~5 turns to catch drift, and on any mismatch.
 
 Turn block format:
 

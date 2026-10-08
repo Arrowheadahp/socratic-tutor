@@ -1,6 +1,6 @@
 # Question Bank
 
-Use exactly ONE per turn. Pick by `Next Move` in state file.
+Use exactly ONE per turn. Pick by `Next Move` (weakest dimension), not in fixed order.
 
 ## Clarify (terms vague, fails generality/exclusion)
 - "What do you mean by X?"

@@ -41,10 +41,14 @@ Rubric: 0 absent, 1 vague, 2 consistent under questioning, 3 survives counterexa
 - <what learner still unsure about>
 
 ## Dialogue Log (last 10 turns full, older summarized)
+
+### Summary of earlier turns (if compacted)
+<empty until first compaction; then one line per dropped session, e.g. Turns 1-4 (Session 1, 2026-09-20): <starting thesis> -> <key refutation> -> <ending thesis>.>
+
+<!-- APPEND ONLY BELOW, DO NOT EDIT PRIOR TURNS -->
 ### Turn 1 (Session 1, <YYYY-MM-DD>)
 Q: <your question>
 A: <learner answer summary>
 Assessment: <what held, what broke>
 
-### Summary of earlier turns (if compacted)
-<1-3 sentence summary per older session: starting thesis -> key refutation -> ending thesis>
+<!-- end-log -->

@@ -45,11 +45,22 @@ Lowercase kebab-case, 1-64 chars: `^[a-z0-9]+(-[a-z0-9]+)*$`. Normalize topic ("
 
 ## Update
 
-After EVERY turn, update the per-topic state file: `Current Hypothesis`, `Hypothesis History` (append-only `v1, v2...`, never rewrite), `Agreed Premises`, `Misconceptions ([active|resolved] -- why)`, `Mastery` (only on observed evidence), `Next Move`, `Remaining Uncertainties`, `updated`.
+After EVERY turn, update the per-topic state file.
 
-Update `index.md` on session start, session end, and status change. Do NOT rewrite the index row on every turn — per-turn `Updated` churn is noise. The per-topic file's `updated` field is the per-turn source of truth; sync it to the index at session boundaries.
+Mutation types:
 
-Keep Dialogue Log append-only with `edit` (append blocks, never rewrite prior turns):
+- Rewrite allowed (in place): `Current Hypothesis`, `Agreed Premises`, `Mastery` (only on observed evidence), `Next Move`, `Remaining Uncertainties`, `updated`, frontmatter `session_count`/`status`.
+- Append-only, never edit/delete/reword: `Hypothesis History` (`v1, v2...`), `Misconceptions` lines, and `Dialogue Log` full turns. To add a misconception, append a new line. To mark one resolved, append a new `[resolved]` line — do not edit the old `[active]` line.
+
+Append protocol (use `edit`, never `write`, for updates):
+
+1. `read` the file tail (~20 lines) before every update.
+2. Set `oldString` to the stable tail anchor only (`<!-- end-log -->` plus the 2-3 lines above it). Set `newString` to anchor content + new block(s) inserted before `<!-- end-log -->`. Use `replaceAll: false`.
+3. On `edit` mismatch: re-`read` once and retry once with a fresh tail. On second failure: tutor memory-only for this turn and tell the learner state did not persist.
+
+Verification: after `edit`, `read` the tail to confirm the new `### Turn N` (or `vN`) is present and `Turn N-1` is byte-identical.
+
+Turn block format:
 
 ```markdown
 ### Turn N (Session S, YYYY-MM-DD)
@@ -58,6 +69,12 @@ A: <learner answer summary>
 Assessment: <what held, what broke>
 ```
 
-Rotation: keep last 10 turns full. Older turns → compress to `Summary of earlier turns` (1-3 sentences per session: starting thesis → key refutation → ending thesis). Compress when the log exceeds ~15 turns or context feels tight. Never delete `Hypothesis History`.
+Update `index.md` on session start, session end, and status change. Do NOT rewrite the index row on every turn — per-turn `Updated` churn is noise. The per-topic file's `updated` field is the per-turn source of truth; sync it to the index at session boundaries.
+
+Rotation (hard trigger): compact when full `### Turn` count >12 OR file >150 lines. Then:
+
+1. Keep the newest 10 full turns verbatim, in order.
+2. Group all dropped turns by session into `### Summary of earlier turns` at the top of the log: one line per session, `Turns A-B (Session S, YYYY-MM-DD): starting thesis -> key refutation -> ending thesis`.
+3. Never renumber turns. Never delete `Hypothesis History`. Verify after compaction: 10 full turns remain + summary covers every dropped turn number + history unchanged.
 
 Template uses YAML frontmatter (machine-readable) + Markdown body (human-readable). Quote all free-text frontmatter values with double quotes and escape embedded `"` as `\"` (goals often contain colons).

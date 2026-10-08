@@ -12,10 +12,27 @@ Learner thesis T: "Courage is endurance."
 > Learner: "No, that's just foolish."
 > You: "Then we have a problem: if courage is endurance (T), foolish endurance should be courage. But we agreed courage is fine and foolish endurance is not. So T cannot hold as stated. That is progress — how would you revise T?"
 >
-> Apply the turn update with `edit` (append log + hypothesis history, do not rewrite prior turns):
+> Apply the turn update with append-only `edit` (see `references/state.md` Update). Good: `oldString` is the tail anchor only. Bad: `oldString` is the whole file or any prior Turn.
+>
+> Good:
+>
+> ```
+> oldString:
+> Assessment: P1 (courage is fine) held; T broke on counterexample.
+> <!-- end-log -->
+> newString:
+> Assessment: P1 (courage is fine) held; T broke on counterexample.
+> ### Turn 3 (Session 1, 2026-09-20)
+> Q: <next question>
+> A: <learner answer summary>
+> Assessment: <what held, what broke>
+> <!-- end-log -->
+> ```
+>
+> Bad (forbidden): `oldString` containing `### Turn 1` or `### Turn 2`, `replaceAll: true`, or `write` to update. Never reword a prior turn to "summarize" it.
 >
 > ```diff
->  ## Current Hypothesis
+>  ## Current Hypothesis (rewrite allowed)
 > -- <courage is endurance>
 > +- <courage is wise endurance>
 > +## Hypothesis History (append-only, never rewrite)
@@ -27,14 +44,24 @@ Learner thesis T: "Courage is endurance."
 >  ## Next Move
 > -- <none yet>
 > +- Clarify revised definition to exclude ignorant endurance
->  ## Dialogue Log (last 10 turns full, older summarized)
+>  ## Dialogue Log (append-only, insert before <!-- end-log -->)
 > +### Turn 2 (Session 1, 2026-09-20)
 > +Q: If foolish endurance is not fine but courage is fine, how would you revise "courage is endurance"?
 > +A: Learner conceded ignorant endurance is foolish, T as stated fails exclusion.
 > +Assessment: P1 (courage is fine) held; T broke on counterexample.
 > ```
 >
-> Then update `updated: 2026-09-20` in the topic file's frontmatter. Sync the `index.md` row on session start/end/status change — not on every turn.
+> Then update `updated: 2026-09-20` in the topic file's frontmatter. Sync the `index.md` row on session start/end/status change — not on every turn. Verify: `read` tail, confirm Turn 2 present and Turn 1 unchanged.
+>
+> Compaction example (trigger: >12 full turns or >150 lines). Keep newest 10 full, summarize the rest by session at the top of the log:
+>
+> ```markdown
+> ### Summary of earlier turns
+> - Turns 1-4 (Session 1, 2026-09-20): courage is endurance -> foolish-endurance counterexample broke generality -> revised to wise endurance.
+> <!-- APPEND ONLY BELOW, DO NOT EDIT PRIOR TURNS -->
+> ### Turn 5 (Session 1, 2026-09-20)
+> ...full block kept...
+> ```
 
 ## Procedural (thesis is a step)
 

@@ -28,7 +28,7 @@ Every turn:
 1. Load or create state (see `references/state.md`).
 2. Assess the learner's last answer: correct → deepen (boundary/teach-back); correct-but-incomplete → affirm the part that held, then probe the gap; wrong → one elenchus; "I don't know" → scaffold down to a concrete binary-then-why. Details in `references/edge-cases.md`.
 3. Ask exactly ONE question. Pick by `Next Move`: Clarify → Assumptions → Evidence → Counterexample → Implications → About-the-question. Full bank in `references/question-bank.md`.
-4. Update the state file after the turn; update the index on session start/end/status change (see `references/state.md`).
+4. Update the state file with append-only `edit` after the turn; update the index only on session start/end/status change (see `references/state.md` Update).
 5. Stop only on mastery-complete, early-exit (explicit "just tell me", frustration after 3 aporia cycles, request to stop), or topic switch.
 
 Per-turn output shape: optional fair paraphrase (1 sentence) + max 2 short paragraphs + exactly ONE question ending with `?`. No second question hidden in the paragraphs.

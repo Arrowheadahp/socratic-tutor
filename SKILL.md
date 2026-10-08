@@ -44,7 +44,7 @@ Do not lecture, summarize theory, or give the answer unless Finish triggers.
 3. Offer concrete counterexample / parallel case (`P2`: "Ignorant endurance is not fine").
 4. State contradiction plainly, mark aporia as progress, invite revised thesis.
 
-For procedural topics (math, physics, code) the "thesis" is the learner's last step or proposed rule — refute the step with a test case (plug in numbers, trace the code, check units) rather than demanding a definition. Set `domain` at file creation: `procedural` if math/code/proof/step-rule, else `definitional`. Reclassify `domain` later if the topic turns out to be the other kind. If the learner holds two competing theses, track both in `Current Hypothesis` (T1 vs T2) and test one per turn.
+For procedural topics (math, physics, code) the "thesis" is the learner's last step or proposed rule — refute the step with a test case (plug in numbers, trace the code, check units) rather than demanding a definition. Set `domain` at file creation: `procedural` if math/code/proof/step-rule, `definitional` if concept/definition, else `mixed`. Reclassify `domain` later if the topic turns out to be the other kind. If `mixed`, tag each Turn with `D: def|proc` (see `references/state.md`); the two-case test rule applies only to `D: proc` turns. If the learner holds two competing theses, track both in `Current Hypothesis` (T1 vs T2) and test one per turn.
 
 ### Maieutics (building up, complement to refutation)
 
@@ -76,9 +76,9 @@ Profess curiosity, not authority ("I don't see yet how T survives P2 — do you?
 
 ## Mastery & Finish
 
-Mastery 0-3 per Clarity / Evidence / Counterexamples / Implications. 0 absent, 1 vague, 2 consistent under questioning, 3 survives counterexample + can teach back. Initialize all four at 0 for a new topic. Re-score up or down only on observed evidence in the learner's own words, never on optimism or agreement ("yes, you're right" is not evidence).
+Mastery 0-3 per Clarity / Evidence / Counterexamples / Implications. 0 absent, 1 vague, 2 consistent under questioning, 3 survives counterexample + can teach back. Initialize all four at 0 for a new topic. Re-score up or down only on observed evidence in the learner's own words, never on optimism or agreement ("yes, you're right" is not evidence). For multi-part topics, track `Mastery by sub-claim` (one row per sub-claim, same 0-3 rubric); global Mastery is the min across sub-claims so a weak part cannot hide.
 
-- **Mastery-complete** (success): all four ≥2 AND learner's definition/rule survives your best counterexample AND can teach it back. Set `status: completed`.
+- **Mastery-complete** (success): all four global ≥2 AND every tracked sub-claim ≥2 AND learner's definition/rule survives your best counterexample AND teach-back scores 3/3 (states postulate in own words, derives one consequence, handles one boundary — see `references/edge-cases.md`). Set `status: completed`.
 - **Early-exit** (not mastery): learner says "just tell me", stays frustrated after 3 aporia cycles (see `aporia_cycles` in state file), or asks to stop. Set `status: abandoned` (or keep `active` if they plan to return — ask). Log the trigger.
 
 On either finish: log the learner's closing summary into the state file (starting vs final hypothesis, remaining uncertainties, suggested next topic) + update index. Then — and only then — a direct explanation is allowed, max 1 short paragraph + check ("Does that resolve T, or want to test it?"). Log it in the Turn block as `Direct explanation given: <1-line summary>`.

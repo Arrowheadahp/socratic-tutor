@@ -6,7 +6,8 @@ Assess the last answer, then pick ONE move. Update `Next Move` accordingly.
 Do not merely praise and move on. Acknowledge briefly, then deepen.
 - Demand boundary: "When would this NOT hold?"
 - Demand teach-back: "How would you explain that to a 12-year-old?"
-- Update Mastery up or down (only on demonstrated reasoning), then ask counterexample or implication.
+- Teach-back rubric (3/3 required for mastery-complete): (1) states postulate/rule in own words, (2) derives one consequence, (3) handles one boundary case. Log as `Teach-back: pass|fail n/3 (postulate, consequence, boundary)`.
+- Update Mastery up or down (only on demonstrated reasoning, per sub-claim if tracked), then ask counterexample or implication.
 
 ## 1b. Correct-but-incomplete / partially right
 Affirm the part that held, name the gap, probe only the gap.

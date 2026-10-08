@@ -41,7 +41,7 @@ Lowercase kebab-case, 1-64 chars: `^[a-z0-9]+(-[a-z0-9]+)*$`. Normalize topic ("
    - If one match: read it, summarize Goal + Current Hypothesis (with version, e.g. v3) + Next Move + Updated date, ask learner to confirm/correct ("Is that still your view?"), then ask ONE resume question. See `references/dialogue-example.md`.
    - If multiple matches: list at most 5 (Topic + Updated + 1-line hypothesis) and ask the learner to pick one, or offer the most recent as default ("Resume `justice` from 2026-09-20, or pick another?"). Then follow the single-match resume.
    - If state older than ~14 days: offer quick review ("Want a 2-sentence recap or restart fresh?") before resuming.
-3. If no match: run staged Opening (see `SKILL.md`), then create file from `templates/state-template.md`. Set `created`/`updated` to today (`YYYY-MM-DD`), `session_count: 1`, `aporia_cycles: 0`, `skill_version: 1`, `last_session_id` to the current chat ID (empty if unavailable).
+3. If no match: run staged Opening (see `SKILL.md`), then create file from `templates/state-template.md`. Set `created`/`updated` to today (`YYYY-MM-DD`), `session_count: 1`, `aporia_cycles: 0`, `stall_count: 0`, `skill_version: 2`, `last_session_id` to the current chat ID (empty if unavailable).
 4. If resuming an existing topic: compare the current chat ID to frontmatter `last_session_id`. If different (or file `updated` is older than the current session start and IDs unavailable), increment `session_count` by 1 once at session start and store the new ID. Never increment per turn or on mid-chat topic switch.
 5. If topic switch mid-session: save current file + index before creating new one.
 
@@ -56,10 +56,11 @@ After each tutoring turn, update the per-topic state file. Skip Opening elicitat
 
 Mutation types:
 
-- Rewrite allowed (in place, only fields that changed): `Current Hypothesis`, `Agreed Premises`, `Mastery` (up or down, only on observed evidence), `Next Move`, `Remaining Uncertainties`, `goal` (if learner refines it), `level` (on adaptation shift), `domain` (on reclassification), `updated`, frontmatter `session_count`/`status`/`aporia_cycles`/`last_session_id`.
+- Rewrite allowed (in place, only fields that changed): `Current Hypothesis`, `Agreed Premises`, `Mastery` and `Mastery by sub-claim` (global = min across sub-claims; up or down, only on observed evidence), `Next Move`, `Remaining Uncertainties`, `goal` (if learner refines it), `level` (on adaptation shift), `domain` (on reclassification, `definitional|procedural|mixed`), `Pinned`, `updated`, frontmatter `session_count`/`status`/`aporia_cycles`/`stall_count`/`last_session_id`.
 - Append-only, never edit/delete/reword: `Hypothesis History` (`v1, v2...`), `Misconceptions` lines, and `Dialogue Log` full turns. To add a misconception, append a new line. To mark one resolved, append a new `[resolved]` line — do not edit the old `[active]` line.
 - `aporia_cycles`: increment by 1 each turn ending in unresolved contradiction; reset to 0 when the learner revises the thesis. At 3, follow frustrated-learner handling (see `references/edge-cases.md`).
-- Stall (no contradiction, no revision): if `Current Hypothesis` is unchanged for 3 consecutive turns (no new `Hypothesis History` version), scaffold down one abstraction level or offer a recap choice. Do not add a counter; derive from history + log.
+- `stall_count`: increment by 1 each turn with no new `Hypothesis History` version (no contradiction, no revision); reset to 0 on any new version. At 2, scaffold down one abstraction level or offer a recap choice — do not wait for the 3-turn stall. Derive from history + log; frontmatter counter is source of truth.
+- `Pinned`: list of max 3 `Turn N` numbers exempt from Rotation compaction (load-bearing refutations, e.g. key derivation or test). Set explicitly; empty by default.
 
 Two small `edit`s per turn (head and tail are non-contiguous — never use a whole-file `oldString`):
 
@@ -72,20 +73,20 @@ Verification: trust the `edit` tool result; re-`read` the head every ~5 turns to
 Turn block format:
 
 ```markdown
-### Turn N (Session S, YYYY-MM-DD)
+### Turn N (Session S, YYYY-MM-DD) D: def|proc
 Q: <your question>
 A: <learner answer summary>
 Assessment: <what held, what broke>
 ```
 
-Log direct explanations inside Assessment: `Direct explanation given: <1-line summary>`. Never log "yes, you're right" as mastery evidence.
+`D:` is required only when frontmatter `domain: mixed` (`def` = definitional move, `proc` = step-rule move tested with a concrete case). For single-domain files omit `D:`. Log teach-back as `Teach-back: <pass|fail> <n/3> (postulate, consequence, boundary)`. Log direct explanations inside Assessment: `Direct explanation given: <1-line summary>`. Never log "yes, you're right" as mastery evidence.
 
-Update `index.md` on session start, session end, and status change. Do NOT rewrite the index row on every turn — per-turn `Updated` churn is noise. The per-topic file's `updated` field is the per-turn source of truth; sync it to the index at session boundaries.
+Update `index.md` on session start, session end, and status change. Do NOT rewrite the index row on every turn — per-turn `Updated` churn is noise. The per-topic file's `updated` field is the per-turn source of truth; sync it to the index at session boundaries. At session start, append `Turn N in progress` to the row (e.g. `active, Turn 29 in progress`) so long runs do not look stale; clear it at session end.
 
 Rotation (hard trigger): compact when full `### Turn` count >12 OR file >150 lines. Then:
 
-1. Keep the newest 10 full turns verbatim, in order.
-2. Group all dropped turns by session into `### Summary of earlier turns` at the top of the log: one line per session, `Turns A-B (Session S, YYYY-MM-DD): starting thesis -> key refutation -> ending thesis`.
-3. Never renumber turns. Never delete `Hypothesis History`. Verify after compaction: 10 full turns remain + summary covers every dropped turn number + history unchanged.
+1. Keep the newest 10 full turns verbatim by default, newest 15 if frontmatter `domain` is `procedural` or `mixed`, plus any `Pinned` turns (max 3), in order.
+2. Group all dropped turns by session into `### Summary of earlier turns` at the top of the log: one line per session, `Turns A-B (Session S, YYYY-MM-DD): <starting thesis> -> <key refutation> -> <equation/test> -> <ending thesis>`.
+3. Never renumber turns. Never delete `Hypothesis History` or `Pinned` turns. Verify after compaction: correct full-turn count remains + summary covers every dropped turn number + history unchanged.
 
 Template uses YAML frontmatter (machine-readable) + Markdown body (human-readable). See quoting rules in `templates/state-template.md`.

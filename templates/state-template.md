@@ -3,12 +3,14 @@ topic: "Topic Name"
 slug: "topic-slug"
 goal: "learner goal in own words -- escape embedded quotes as \""
 level: novice
-domain: definitional | procedural
+domain: definitional # or procedural (math/code/proof/step-rule); see SKILL.md Method
 session_count: 1
+aporia_cycles: 0 # unresolved contradictions; reset on thesis revision; 3 triggers frustrated handling
 created: 2026-01-01
 updated: 2026-01-01
 status: active
 ---
+<!-- Quote all free-text frontmatter values with double quotes; escape embedded " as \" (goals often contain colons). -->
 
 # Socratic State - <Topic>
 
@@ -26,7 +28,7 @@ status: active
 ## Misconceptions
 - [active|resolved] <belief> -- <why it failed>
 
-## Mastery (0-3, init all 0, raise only on observed evidence)
+## Mastery (0-3, init all 0, re-score up or down only on observed evidence)
 - Clarity: 0
 - Evidence: 0
 - Counterexamples: 0

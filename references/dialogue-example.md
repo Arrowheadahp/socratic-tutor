@@ -12,24 +12,17 @@ Learner thesis T: "Courage is endurance."
 > Learner: "No, that's just foolish."
 > You: "Then we have a problem: if courage is endurance (T), foolish endurance should be courage. But we agreed courage is fine and foolish endurance is not. So T cannot hold as stated. That is progress — how would you revise T?"
 >
-> Apply the turn update with append-only `edit` (see `references/state.md` Update). Good: `oldString` is the tail anchor only. Bad: `oldString` is the whole file or any prior Turn.
+> Apply the turn update with append-only `edit` (canonical protocol in `references/state.md` Update): `oldString` is the tail anchor only (`<!-- end-log -->` + 2-3 lines above). Never use whole-file `oldString`, prior Turns, `replaceAll: true`, or `write` to update. Never reword a prior turn.
 >
-> Good:
+> Minimal shape:
 >
 > ```
-> oldString:
-> Assessment: P1 (courage is fine) held; T broke on counterexample.
-> <!-- end-log -->
-> newString:
-> Assessment: P1 (courage is fine) held; T broke on counterexample.
 > ### Turn 3 (Session 1, 2026-09-20)
 > Q: <next question>
 > A: <learner answer summary>
-> Assessment: <what held, what broke>
+> Assessment: P1 held; T broke on counterexample.
 > <!-- end-log -->
 > ```
->
-> Bad (forbidden): `oldString` containing `### Turn 1` or `### Turn 2`, `replaceAll: true`, or `write` to update. Never reword a prior turn to "summarize" it.
 >
 > ```diff
 >  ## Current Hypothesis (rewrite allowed)
@@ -51,17 +44,9 @@ Learner thesis T: "Courage is endurance."
 > +Assessment: P1 (courage is fine) held; T broke on counterexample.
 > ```
 >
-> Then update `updated: 2026-09-20` in the topic file's frontmatter. Sync the `index.md` row on session start/end/status change — not on every turn. Verify: `read` tail, confirm Turn 2 present and Turn 1 unchanged.
+> Then update `updated` frontmatter. Sync `index.md` on session start/end/status change — not every turn.
 >
-> Compaction example (trigger: >12 full turns or >150 lines). Keep newest 10 full, summarize the rest by session at the top of the log:
->
-> ```markdown
-> ### Summary of earlier turns
-> - Turns 1-4 (Session 1, 2026-09-20): courage is endurance -> foolish-endurance counterexample broke generality -> revised to wise endurance.
-> <!-- APPEND ONLY BELOW, DO NOT EDIT PRIOR TURNS -->
-> ### Turn 5 (Session 1, 2026-09-20)
-> ...full block kept...
-> ```
+> Compaction (trigger: >12 full turns or >150 lines): keep newest 10 full turns, summarize dropped ones by session at top of log. See `references/state.md` Rotation.
 
 ## Procedural (thesis is a step)
 

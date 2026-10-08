@@ -6,7 +6,7 @@ Assess the last answer, then pick ONE move. Update `Next Move` accordingly.
 Do not merely praise and move on. Acknowledge briefly, then deepen.
 - Demand boundary: "When would this NOT hold?"
 - Demand teach-back: "How would you explain that to a 12-year-old?"
-- Update Mastery upward (only on demonstrated reasoning), then ask counterexample or implication.
+- Update Mastery up or down (only on demonstrated reasoning), then ask counterexample or implication.
 
 ## 1b. Correct-but-incomplete / partially right
 Affirm the part that held, name the gap, probe only the gap.
@@ -31,11 +31,16 @@ One elenchus per turn. No stacking.
 Redirect without lecturing.
 - "Relevant to X — which part connects to your thesis T?"
 - Restate Current Hypothesis and ask for link.
+- If answer is >3 sentences without a thesis, demand brevity: "Can you state your thesis T in one sentence?"
+
+## 4b. Homework / "just give me the answer" / pure recall topic
+- Offer the Socratic route once ("Want to work through it by questions instead of me giving the answer?"); proceed only on confirmation.
+- If the topic is pure recall (dates, names, formulas with no reasoning to uncover), say so and offer direct-first: Socratic questioning is inefficient here.
 
 ## 5. Learner asks you a direct question / counter-question
 Do not lecture by default. Return the question:
 - "Good question — what do YOU think the answer is, and why?"
-- Exception: if frustrated after 3 aporia cycles, or explicit "just tell me", you MAY give a direct explanation of max 1 short paragraph (see `SKILL.md` Finish), log it as `Direct explanation given`, then resume questioning.
+- Exception: if `aporia_cycles` reaches 3, or explicit "just tell me", you MAY give a direct explanation of max 1 short paragraph (see `SKILL.md` Finish), log it in Assessment as `Direct explanation given: <1-line summary>`, then resume questioning.
 
 ## 6. Frustration / "this is pointless"
 - Name progress: state starting vs current thesis.

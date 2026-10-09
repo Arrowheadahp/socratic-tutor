@@ -1,6 +1,6 @@
 # Question Bank
 
-Use exactly ONE per turn. During Opening diagnostics use Diagnostic-probe order first (concrete-use → discrimination → prerequisite); after that pick by `Next Move`: lowest global Mastery dimension first (tie-break Clarity → Evidence → Counterexamples → Implications); if any `Mastery by sub-claim` row scores below global, target that row first. Not in fixed order.
+Use exactly ONE per turn. During Opening diagnostics use Diagnostic-probe order first (concrete-use → discrimination → prerequisite); after that pick by `Next Move`: lowest global Mastery dimension first (tie-break Clarity → Evidence → Counterexamples → Implications = dependency order); if any `Mastery by sub-claim` row scores below global, target that row first. Not in fixed order.
 
 ## Diagnostic-probe (Opening only — infer understanding, never ask level)
 - Concrete-use: "Can you give an everyday example of X?"

@@ -41,7 +41,7 @@ Lowercase kebab-case, 1-64 chars: `^[a-z0-9]+(-[a-z0-9]+)*$`. Normalize topic ("
    - If one match: read it, summarize Goal + Current Hypothesis (with version, e.g. v3) + Next Move + Updated date, ask learner to confirm/correct ("Is that still your view?"), then ask ONE resume question. See `references/dialogue-example.md`. If the file has `blocked_by` set, also head-read the blocker file and summarize both in learner language (topic names only, never slugs/paths/files): main hypothesis + blocker status, blocker hypothesis + what it unblocks. If the file has `parent_slug` set, also head-read the parent and note the return point ("this unblocks X where we paused at ..."). Offer the choice in ONE question.
    - If multiple matches: list at most 5 (Topic + Updated + 1-line hypothesis) and ask the learner to pick one, or offer the most recent as default ("Resume `justice` from 2026-09-20, or pick another?"). Then follow the single-match resume. Prefer unblocking order: if a main topic is blocked by an active sub-topic, offer the sub-topic first.
    - If state older than ~14 days: offer quick review ("Want a 2-sentence recap or restart fresh?") before resuming.
-3. If no match: run staged Opening (see `SKILL.md`): elicit topic → goal → thesis, never ask level. Then create file from `templates/state-template.md` right after thesis. Set `created`/`updated` to today (`YYYY-MM-DD`), `session_count: 1`, `aporia_cycles: 0`, `stall_count: 0`, `level: unassessed`, `skill_version: 2`, `last_session_id` to the current chat ID (empty if unavailable). Then run diagnostic probes (concrete-use → discrimination → prerequisite, no fixed max) and log every probe answer as Turn 1, Turn 2, etc.; set inferred `level` at the first state update after the probes.
+3. If no match: run staged Opening (see `SKILL.md`): elicit topic → goal → thesis (unlogged Turn 0, never ask level). Then create file from `templates/state-template.md` right after thesis. Set `created`/`updated` to today (`YYYY-MM-DD`), `session_count: 1`, `aporia_cycles: 0`, `stall_count: 0`, `level: unassessed`, `skill_version: 2`, `last_session_id` to the current chat ID (empty if unavailable). Then run Diagnostic-probes (see `references/question-bank.md`; no fixed max) and log every probe answer as Turn 1, Turn 2, etc.; set inferred `level` at the first state update after the probes.
 4. If resuming an existing topic: compare the current chat ID to frontmatter `last_session_id`. If different (or file `updated` is older than the current session start and IDs unavailable), increment `session_count` by 1 once at session start and store the new ID. Never increment per turn or on mid-chat topic switch.
 5. If topic switch mid-session: save current file + index before creating new one.
 
@@ -52,7 +52,7 @@ Lowercase kebab-case, 1-64 chars: `^[a-z0-9]+(-[a-z0-9]+)*$`. Normalize topic ("
 
 ## Update
 
-After each tutoring turn, update the per-topic state file. Skip Opening elicitation turns before the topic file exists, and skip the write entirely if nothing changed this turn.
+After each tutoring turn, update the per-topic state file. Opening elicitation before the file exists is unlogged Turn 0 — skip the write; Turn 1 starts at the first diagnostic probe after file creation. Skip the write entirely if nothing changed this turn.
 
 Mutation types:
 

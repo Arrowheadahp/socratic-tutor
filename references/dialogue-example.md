@@ -73,7 +73,7 @@ Learner correctly handles case A but has no general rule:
 
 > Learner: "Tutor me Socratically on photosynthesis, goal: pass my bio exam, I think plants eat soil."
 > You (bad): "Are you novice, intermediate, or advanced?" (vague self-label — tells you nothing)
-> You (good): create the state file right after the thesis with `level: unassessed`, then diagnose and log as Turns: Turn 1 "So your current view is plants gain mass by eating soil — correct? What makes you think so?" Turn 2 "Can you give an everyday example of a plant growing — where did its extra mass come from?" Turn 3 "Why does that count? What would NOT count as plants eating?" Then set inferred `level` on the first state update.
+> You (good): create the state file right after the thesis with `level: unassessed`, then run Diagnostic-probes per `references/question-bank.md` and log as Turns (Turn 1 concrete-use, Turn 2 discrimination, Turn 3 prerequisite). Then set inferred `level` on the first state update.
 
 ## Resume (multi-session)
 

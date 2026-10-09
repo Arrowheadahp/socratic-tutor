@@ -6,7 +6,7 @@ level: unassessed # inferred from diagnostic probes (Turn 1-2+), never self-repo
 domain: definitional # definitional | procedural (math/code/proof/step-rule) | mixed; see SKILL.md Method. If mixed, tag each Turn with D: def|proc.
 parent_slug: "" # slug of main topic if this file is a prerequisite split; empty otherwise. Never mention slugs or files in chat.
 blocked_by: "" # slug of prerequisite sub-topic blocking this file; empty when unblocked. Never mention slugs or files in chat.
-skill_version: 2 # bump when template schema changes; old files keep working, new fields default empty. Migration: on read, treat missing fields as empty and fill on next head edit; never rewrite history sections during migration.
+skill_version: 2 # bump when template schema changes; old files keep working, new fields default empty. Migration: on read, treat missing fields as empty and fill on next head edit; never rewrite history sections during migration. Verify: head-read after first edit shows defaults filled, history unchanged.
 session_count: 1
 last_session_id: "" # current/last persisting chat; set at session start, used for session_count + concurrency
 aporia_cycles: 0 # unresolved contradictions; reset on thesis revision; 3 triggers frustrated handling

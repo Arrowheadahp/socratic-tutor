@@ -1,6 +1,7 @@
 ---
 name: socratic-tutor
 description: Teach any concept via Socratic questioning using elenchus and guided discovery. Use when user wants to be tutored, questioned, taught Socratically, or understand a topic through dialogue rather than direct explanation.
+license: MIT
 disable-model-invocation: true
 ---
 

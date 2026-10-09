@@ -4,6 +4,8 @@ slug: "topic-slug"
 goal: "learner goal in own words -- escape embedded quotes as \""
 level: novice
 domain: definitional # definitional | procedural (math/code/proof/step-rule) | mixed; see SKILL.md Method. If mixed, tag each Turn with D: def|proc.
+parent_slug: "" # slug of main topic if this file is a prerequisite split; empty otherwise. Never mention slugs or files in chat.
+blocked_by: "" # slug of prerequisite sub-topic blocking this file; empty when unblocked. Never mention slugs or files in chat.
 skill_version: 2 # bump when template schema changes; old files keep working, new fields default empty. Migration: on read, treat missing fields as empty and fill on next head edit; never rewrite history sections during migration.
 session_count: 1
 last_session_id: "" # current/last persisting chat; set at session start, used for session_count + concurrency
@@ -28,6 +30,10 @@ status: active
 - <P1>
 - <P2>
 
+## Prerequisites (background concepts this topic depends on)
+- [solid|shaky|missing] <concept> -- <evidence> -- <inline|sub-topic: Name>
+- Keep to 1-3 load-bearing concepts only. Mark `blocked` here when a `missing` prerequisite needs its own sub-topic before this topic can proceed.
+
 ## Misconceptions
 - [active|resolved] <belief> -- <why it failed>
 
@@ -40,9 +46,11 @@ status: active
 Rubric: 0 absent, 1 vague, 2 consistent under questioning, 3 survives counterexample + can teach back. "Yes, you're right" is not evidence.
 
 ## Mastery by sub-claim (global = min across rows; all rows ≥2 required for mastery-complete)
-| Sub-claim | Clarity | Evidence | Counterexamples | Implications |
-|-----------|---------|----------|-----------------|--------------|
-| <e.g. time dilation> | 0 | 0 | 0 | 0 |
+| Sub-claim | Clarity | Evidence | Counterexamples | Implications | Socratic fit |
+|-----------|---------|----------|-----------------|--------------|--------------|
+| <e.g. time dilation> | 0 | 0 | 0 | 0 | optimal |
+
+Socratic fit per row: `optimal` (reasoning/causal — stay Socratic) | `workable` (mix — Socratic on use, direct on facts) | `poor` (recall/arbitrary fact — direct + quiz is faster). Set on first contact with the sub-claim, revise on evidence. Never auto-switch method on `poor` — ask learner first (see `references/edge-cases.md` 4d).
 
 ## Pinned (max 3 Turn numbers exempt from compaction)
 - <empty by default, e.g. Turn 7 light-clock derivation>

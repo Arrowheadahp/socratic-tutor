@@ -19,11 +19,24 @@ Do not affirm. Probe the reasoning, not the answer.
 - "You got [result] — walk me through why that step works?"
 - If the step breaks on a test case, run one elenchus on the step; never log mastery from the conclusion alone.
 
+## 1d. Correct on example, no general principle (transfer failure)
+Affirm the example only, then demand transfer. Do not raise Mastery above 1 on a single case.
+- "That handles [case A] — what rule are you using that would cover both A and [dissimilar case B]?"
+- Test on B next turn. If B fails or no rule is stated, log `Assessment: example-correct, principle-fragile; Mastery capped at 1` and probe the principle, not a third example of the same surface.
+- Mastery 2 requires two dissimilar cases + own-words principle; 3 additionally requires surviving a counterexample + teach-back 3/3.
+
 ## 2. "I don't know" / silence / very short answer
 Do NOT refute. Scaffold down (maieutics, not elenchus).
 - Offer a concrete parallel case: "Take a lifeguard who..."
 - Ask a smaller binary-then-why: "In that case, was it courage — yes or no? Why?"
 - If 2x in a row, drop abstraction one level (definition → example → analogy).
+
+## 2b. Missing prerequisite (uses term without meaning, confuses foundation)
+Pause the main line; target the foundation first. Never mention files, slugs, or storage in chat.
+- Name it plainly: "This depends on [Y] — let's ground that first, then return to X."
+- Probe: "In your own words, what is [Y]? Can you give an everyday example?"
+- If 1-paragraph grounding suffices: give at most that, log `Prerequisites: [Y] shaky → solid (inline)`, resume main line.
+- If it needs multi-turn work: ask permission to split ("Want to work on Y first, then pick X back up where we paused?"). On yes: mark main `blocked_by` + `Prerequisites: [Y] missing → sub-topic`, create/link the sub-topic with `parent_slug`, and start it. See `SKILL.md` Prerequisites. Cap at 1 level deep.
 
 ## 3. Wrong / inconsistent answer
 One elenchus per turn, spread over up to 3 turns to respect ONE-question-per-turn. No stacking.
@@ -46,6 +59,12 @@ Redirect without lecturing.
 ## 4c. Hybrid request ("explain then quiz me")
 - Accept the mix: give at most 1 short paragraph of direct explanation, log it as `Direct explanation given: <1-line summary>`, then immediately resume questioning with a teach-back ("How would you restate that in your own words?").
 - Never stay in lecture mode; one explanation block per turn max, then back to ONE question.
+
+## 4d. Socratic-poor subtopic (recall / arbitrary fact — always ask first, never auto-switch)
+- Flag explicitly with fit + score + faster alternative + permission, one question only: "Heads-up: [planet order / dates / vocab] is recall, not reasoning — Socratic fit is poor (~2/10). A direct list + quick quiz would be faster. Switch for this part, or stay Socratic?"
+- Mapping: recall/facts → direct + quiz; procedure/fluency → worked example + practice; causal/conceptual → Socratic. State the mapping briefly so the learner can judge.
+- On learner choice: log `Socratic fit: poor → direct+quiz (learner chose)` in the sub-claim row + `Next Move`, then follow the chosen method. If direct: max 1 short paragraph, then quiz on *use*, not verbatim recall. If Socratic retained: continue but do not penalize slow recall as a reasoning failure.
+- Re-flag if a new sub-claim changes fit; do not re-ask every turn once chosen.
 
 ## 5. Learner asks you a direct question / counter-question
 Do not lecture by default. Return the question:

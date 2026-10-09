@@ -36,8 +36,8 @@ Lowercase kebab-case, 1-64 chars: `^[a-z0-9]+(-[a-z0-9]+)*$`. Normalize topic ("
 
 ## Start
 
-1. Glob active state dir + legacy `socratic-state-*.md` in CWD.
-2. Collect all matches with `status: active`. Sort by frontmatter `updated` descending using head-only reads (first ~15 lines) — do not full-read every file. The per-topic file's `updated` is source of truth; the index is stale mid-session.
+1. Glob active state dir + legacy `socratic-state-*.md` in CWD. Lazy-load: read `index.md` only if glob finds >1 topic file or a repair is suspected; with 0-1 files skip the index read to save tokens.
+2. Collect all matches with `status: active`. Sort by frontmatter `updated` descending using head-only reads (first ~15 lines) — do not full-read every file. The per-topic file's `updated` is source of truth; the index is stale mid-session. If any row still shows `, Turn N in progress` from a crashed session (file `updated` newer than index sync or older than ~1 day with no active chat), clear the marker at session start and note it in chat.
    - If one match: read it, summarize Goal + Current Hypothesis (with version, e.g. v3) + Next Move + Updated date, ask learner to confirm/correct ("Is that still your view?"), then ask ONE resume question. See `references/dialogue-example.md`.
    - If multiple matches: list at most 5 (Topic + Updated + 1-line hypothesis) and ask the learner to pick one, or offer the most recent as default ("Resume `justice` from 2026-09-20, or pick another?"). Then follow the single-match resume.
    - If state older than ~14 days: offer quick review ("Want a 2-sentence recap or restart fresh?") before resuming.
@@ -58,9 +58,9 @@ Mutation types:
 
 - Rewrite allowed (in place, only fields that changed): `Current Hypothesis`, `Agreed Premises`, `Mastery` and `Mastery by sub-claim` (global = min across sub-claims; up or down, only on observed evidence), `Next Move`, `Remaining Uncertainties`, `goal` (if learner refines it), `level` (on adaptation shift), `domain` (on reclassification, `definitional|procedural|mixed`), `Pinned`, `updated`, frontmatter `session_count`/`status`/`aporia_cycles`/`stall_count`/`last_session_id`.
 - Append-only, never edit/delete/reword: `Hypothesis History` (`v1, v2...`), `Misconceptions` lines, and `Dialogue Log` full turns. To add a misconception, append a new line. To mark one resolved, append a new `[resolved]` line — do not edit the old `[active]` line.
-- `aporia_cycles`: increment by 1 each turn ending in unresolved contradiction; reset to 0 when the learner revises the thesis. At 3, follow frustrated-learner handling (see `references/edge-cases.md`).
-- `stall_count`: increment by 1 each turn with no new `Hypothesis History` version (no contradiction, no revision); reset to 0 on any new version. At 2, scaffold down one abstraction level or offer a recap choice — do not wait for the 3-turn stall. Derive from history + log; frontmatter counter is source of truth.
-- `Pinned`: list of max 3 `Turn N` numbers exempt from Rotation compaction (load-bearing refutations, e.g. key derivation or test). Set explicitly; empty by default.
+- `aporia_cycles`: increment by 1 each turn ending in unresolved contradiction; reset to 0 when the learner revises the thesis (new `Hypothesis History` version counts as revision). At 3, give ONE direct explanation first per `SKILL.md` priority, then early-exit only if still frustrated next turn (see `references/edge-cases.md`).
+- `stall_count`: increment by 1 each turn with no new `Hypothesis History` version (no contradiction, no revision); reset to 0 on any new version. Exempt the required second procedural test case (see `references/dialogue-example.md` two-case rule) from incrementing — it is confirmation, not stalling. At 2, scaffold down one abstraction level or offer a recap choice — do not wait for the 3-turn stall. Derive from history + log; frontmatter counter is source of truth.
+- `Pinned`: list of max 3 `Turn N` numbers exempt from Rotation compaction (load-bearing refutations, e.g. key derivation or test). Auto-pin Turn 1 (origin thesis) plus the first key refutation by default; learner may override explicitly. Set explicitly; empty by default.
 
 Two small `edit`s per turn (head and tail are non-contiguous — never use a whole-file `oldString`):
 
@@ -85,8 +85,8 @@ Update `index.md` on session start, session end, and status change. Do NOT rewri
 
 Rotation (hard trigger): compact when full `### Turn` count >12 OR file >150 lines. Then:
 
-1. Keep the newest 10 full turns verbatim by default, newest 15 if frontmatter `domain` is `procedural` or `mixed`, plus any `Pinned` turns (max 3), in order.
-2. Group all dropped turns by session into `### Summary of earlier turns` at the top of the log: one line per session, `Turns A-B (Session S, YYYY-MM-DD): <starting thesis> -> <key refutation> -> <equation/test> -> <ending thesis>`.
+1. Keep the newest 10 full turns verbatim by default, newest 15 if frontmatter `domain` is `procedural` or `mixed`, plus any `Pinned` turns (max 3), in order. `Pinned` defaults already include Turn 1 origin, so early thesis is never lost.
+2. Group all dropped turns by session into `### Summary of earlier turns` at the top of the log: one line per session, `Turns A-B (Session S, YYYY-MM-DD): <starting thesis> -> <key refutation> -> <equation/test> -> <ending thesis>`. Each summary line must name the dropped equation/test so procedural derivations survive compaction.
 3. Never renumber turns. Never delete `Hypothesis History` or `Pinned` turns. Verify after compaction: correct full-turn count remains + summary covers every dropped turn number + history unchanged.
 
 Template uses YAML frontmatter (machine-readable) + Markdown body (human-readable). See quoting rules in `templates/state-template.md`.

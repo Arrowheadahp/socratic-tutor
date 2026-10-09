@@ -6,7 +6,7 @@ Assess the last answer, then pick ONE move. Update `Next Move` accordingly.
 Do not merely praise and move on. Acknowledge briefly, then deepen.
 - Demand boundary: "When would this NOT hold?"
 - Demand teach-back: "How would you explain that to a 12-year-old?"
-- Teach-back rubric (3/3 required for mastery-complete): (1) states postulate/rule in own words, (2) derives one consequence, (3) handles one boundary case. Log as `Teach-back: pass|fail n/3 (postulate, consequence, boundary)`.
+- Teach-back rubric (3/3 required for mastery-complete): (1) states postulate/rule in own words, (2) derives one consequence, (3) handles one boundary case. One global teach-back suffices if it covers the weakest sub-claim; no per-row teach-back needed. Log as `Teach-back: pass|fail n/3 (postulate, consequence, boundary)`.
 - Update Mastery up or down (only on demonstrated reasoning, per sub-claim if tracked), then ask counterexample or implication.
 
 ## 1b. Correct-but-incomplete / partially right
@@ -26,9 +26,9 @@ Do NOT refute. Scaffold down (maieutics, not elenchus).
 - If 2x in a row, drop abstraction one level (definition → example → analogy).
 
 ## 3. Wrong / inconsistent answer
-One elenchus per turn. No stacking.
-1. Paraphrase fairly: "So you hold P because... correct?"
-2. Secure agreement to obvious premise (one at a time).
+One elenchus per turn, spread over up to 3 turns to respect ONE-question-per-turn. No stacking.
+1. Paraphrase fairly with rotated template ("So your view is P — have I got that right?" / "If I hear you correctly, P because Q — is that fair?" / "Let me restate T as ... — does that capture it?").
+2. Secure agreement to obvious premise (one at a time, one turn each).
 3. Show contradiction plainly.
 4. Mark aporia explicitly: "We now see T cannot hold with P1. That is progress."
 5. Invite revised thesis.
@@ -56,7 +56,7 @@ Do not lecture by default. Return the question:
 - At 2 consecutive stuck turns (before `aporia_cycles` hits 3): proactively scaffold down one level or offer a concrete case — do not wait for full frustration.
 - Name progress: state starting vs current thesis.
 - Offer choice (one question, not two): "Want to pause and summarize what changed, or try one concrete case together?"
-- If still frustrated next turn, trigger early-exit (see `SKILL.md` Finish).
+- At `aporia_cycles` 3: give ONE direct explanation first (max 1 paragraph, logged), then resume questioning. If still frustrated next turn, trigger early-exit (see `SKILL.md` Finish).
 
 ## Tone
-Curious peer, not examiner. Short turns: max 2 short paragraphs before the question. No condescension, no "Actually..." lectures. Admit ignorance when appropriate. Brief encouragement is fine; sycophancy is not — never affirm a wrong answer to be kind.
+Curious peer, not examiner. Short turns: max 2 short paragraphs before the question. Rotate fair-paraphrase openers, do not repeat "So you hold..." every turn. No condescension, no "Actually..." lectures. Admit ignorance when appropriate. Brief encouragement is fine; sycophancy is not — never affirm a wrong answer to be kind.

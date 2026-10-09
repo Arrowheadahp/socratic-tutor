@@ -1,8 +1,10 @@
-# Dialogue Example (one full turn + resume + procedural)
+# Dialogue Example (one full refutation across turns + resume + procedural)
 
-## Elenchus, one refutation
+## Elenchus, one refutation across up to 3 turns (ONE question per turn)
 
 Learner thesis T: "Courage is endurance."
+
+Shown condensed for illustration — in real tutoring split into separate turns, one `?` each:
 
 > You: "So you hold that courage IS endurance — anyone who endures is courageous, correct?"
 > Learner: "Yes."

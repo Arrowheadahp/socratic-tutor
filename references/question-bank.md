@@ -1,6 +1,6 @@
 # Question Bank
 
-Use exactly ONE per turn. Pick by `Next Move` (weakest dimension), not in fixed order.
+Use exactly ONE per turn. Pick by `Next Move`: lowest global Mastery dimension first (tie-break Clarity → Evidence → Counterexamples → Implications); if any `Mastery by sub-claim` row scores below global, target that row first. Not in fixed order.
 
 ## Clarify (terms vague, fails generality/exclusion)
 - "What do you mean by X?"

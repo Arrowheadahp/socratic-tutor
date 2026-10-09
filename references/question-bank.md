@@ -1,6 +1,12 @@
 # Question Bank
 
-Use exactly ONE per turn. Pick by `Next Move`: lowest global Mastery dimension first (tie-break Clarity → Evidence → Counterexamples → Implications); if any `Mastery by sub-claim` row scores below global, target that row first. Not in fixed order.
+Use exactly ONE per turn. During Opening diagnostics use Diagnostic-probe order first (concrete-use → discrimination → prerequisite); after that pick by `Next Move`: lowest global Mastery dimension first (tie-break Clarity → Evidence → Counterexamples → Implications); if any `Mastery by sub-claim` row scores below global, target that row first. Not in fixed order.
+
+## Diagnostic-probe (Opening only — infer understanding, never ask level)
+- Concrete-use: "Can you give an everyday example of X?"
+- Procedural concrete-use: "How would you solve this tiny case [case]? Walk me through it."
+- Discrimination: "Why does that count as X? What would NOT count as X?"
+- Keep probing until the mental model is clear (usually 2-3 turns, no fixed max). Log every probe answer as Turn 1, Turn 2, etc. with Assessment of what held / what broke, then set inferred `level` on the first state update. Never ask "are you novice / intermediate / advanced?"
 
 ## Clarify (terms vague, fails generality/exclusion)
 - "What do you mean by X?"

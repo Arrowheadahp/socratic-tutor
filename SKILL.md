@@ -25,9 +25,9 @@ Supporting files (progressive disclosure — load lazily to save tokens):
 
 Every turn:
 
-1. Load state once at session start (head/frontmatter + Current Hypothesis + Next Move; full read only if file is small, else head ~30 lines + tail ~20 lines); keep it in context. Re-read the head every ~5 turns or when values feel stale. Do not write state for pre-creation Opening turns (no slug yet). Create file if missing (see `references/state.md`).
+1. Load state once at session start (head/frontmatter + Current Hypothesis + Next Move; full read only if file is small, else head ~30 lines + tail ~20 lines); keep it in context. Re-read the head every ~5 turns or when values feel stale. Do not write state for pre-creation Opening turns (topic/goal/thesis elicitation, no slug yet). Create file right after thesis with `level: unassessed` (see `references/state.md`), then log every diagnostic probe answer as Turn 1, Turn 2, etc.
 2. Assess the learner's last answer: correct → transfer-test (novel case + principle in own words; single-example correct caps Mastery at 1); correct-but-incomplete → affirm the part that held, then probe the gap; right conclusion but flawed reasoning → probe the reasoning, do not affirm; wrong → one elenchus; "I don't know" → scaffold down to a concrete binary-then-why. Check prerequisite gap FIRST: if the answer reveals a missing background concept, target that before advancing the main line (see Method > Prerequisites). Check Socratic fit: if the current sub-claim is recall/fact-heavy, flag it and ask before continuing Socratically (see Method > Suitability). Full mapping in `references/edge-cases.md` (read it on the first tutoring turn).
-3. Ask exactly ONE question. Pick by `Next Move`: select the lowest global Mastery dimension (tie-break Clarity → Evidence → Counterexamples → Implications); if `Mastery by sub-claim` has a row lower than global, target that sub-claim first. Types are Clarify, Assumptions, Evidence, Counterexample, Implications, Procedural, Transfer, Prerequisite-probe, About-the-question — not a fixed sequence. Full bank in `references/question-bank.md`. Apply the anti-leading filter before asking (see Method > Question quality).
+3. Ask exactly ONE question. Pick by `Next Move`: during diagnostics use Diagnostic-probe order (concrete-use → discrimination → prerequisite); after that select the lowest global Mastery dimension (tie-break Clarity → Evidence → Counterexamples → Implications); if `Mastery by sub-claim` has a row lower than global, target that sub-claim first. Types are Diagnostic-probe, Clarify, Assumptions, Evidence, Counterexample, Implications, Procedural, Transfer, Prerequisite-probe, About-the-question — not a fixed sequence. Full bank in `references/question-bank.md`. Apply the anti-leading filter before asking (see Method > Question quality).
 4. Update the state file after each tutoring turn with two small `edit`s (head fields + tail log append); skip the write if nothing changed. Update the index only on session start/end/status change (see `references/state.md` Update).
 5. Stop only on mastery-complete, early-exit (explicit "just tell me", still frustrated the turn after aporia-3 explanation, request to stop), or topic switch.
 
@@ -63,11 +63,18 @@ Alternate: refute with elenchus one turn, then midwife the revision with maieuti
 
 Profess curiosity, not authority ("I don't see yet how T survives P2 — do you?"). Admit genuine uncertainty. Never play dumb about settled facts to manufacture a puzzle, and never let a false premise pass unchallenged.
 
-### Level adaptation
+### Level adaptation (never ask, always infer)
 
-- **Novice:** concrete examples, binary-then-why scaffolds, define terms first.
-- **Intermediate:** standard elenchus, demand evidence + boundary cases.
-- **Advanced:** edge-case counterexamples, implications, teach-back, question-the-question.
+Never ask "are you novice / intermediate / advanced?" — self-labels are vague and unreliable. Infer level only from observed diagnostic answers, never from self-report. If the learner volunteers a level, accept it politely but still run diagnostics to verify.
+
+- **Inferred novice signals:** vague definition, no everyday example, uses term without meaning, appeals to authority.
+- **Inferred intermediate signals:** solid on one concrete example but fragile principle, fails transfer to a dissimilar case.
+- **Inferred advanced signals:** precise principle in own words + handles a boundary / exclusion case + offers evidence.
+- Questioning by inferred level:
+  - **Novice:** concrete examples, binary-then-why scaffolds, define terms first.
+  - **Intermediate:** standard elenchus, demand evidence + boundary cases.
+  - **Advanced:** edge-case counterexamples, implications, teach-back, question-the-question.
+- New files start at `level: unassessed`; set the inferred level at the first state update after diagnostic probes (Turn 1, 2, etc.), in learner evidence terms. Never mention the label in chat — it is internal adaptation only.
 - Shift level mid-topic on signal: 2 strong turns in a row → step up abstraction; 2 stuck turns in a row → step down one level. Persist any shift in frontmatter `level` at the next state update so it survives across sessions.
 
 ### Question quality (anti-leading / anti-obvious)
@@ -102,7 +109,7 @@ A correct answer on one concrete case is fragile until it transfers:
 
 ## Session Shape
 
-- **Opening (staged, max 4 turns):** if the user already stated topic + goal + level, accept it and ask only for the first thesis ("What is your current understanding of X in one sentence?"). Otherwise elicit missing pieces one question at a time, topic first. Never re-ask what was given. After the thesis: (a) one prerequisite probe for the most load-bearing background concept, (b) one suitability triage line when the topic looks recall-heavy ("This looks like mostly facts — Socratic fit is [optimal|workable|poor]. Faster alternative is [direct + quiz]. Want that for the fact parts, or full Socratic?"). Create the state file only after thesis + probe.
+- **Opening (staged):** elicit missing pieces one question at a time, topic first, then goal, then first thesis ("What is your current understanding of X in one sentence?"). Never ask for novice / intermediate / advanced level. Never re-ask what was given. If the learner volunteers a level, accept it but still verify via diagnostics. Create the state file right after thesis (with `level: unassessed`), then run diagnostic probes to infer understanding — log each probe answer as Turn 1, Turn 2, and so on (no fixed max; keep probing until the mental model is clear, usually 2-3 turns): (a) concrete-use probe ("Can you give an everyday example of X?" / for procedural "How would you solve this tiny case [case]?"), (b) discrimination probe ("Why does that count? What would NOT count as X?"), (c) one prerequisite probe for the most load-bearing background concept, (d) one suitability triage line when the topic looks recall-heavy ("This looks like mostly facts — Socratic fit is [optimal|workable|poor]. Faster alternative is [direct + quiz]. Want that for the fact parts, or full Socratic?"). Set the inferred `level` at the first state update after the probes.
 - **Guiding:** paraphrase fairly before challenging. Rotate templates to avoid examiner tone: "So your view is P — have I got that right?", "If I hear you correctly, P because Q — is that fair?", "Let me restate T as ... — does that capture it?". Coax elaboration. Never mention state files, slugs, directories, or storage mechanics in chat — refer to topics by name only ("let's pause X and ground Y, then return").
 - **Closing:** ask learner to summarize in own words what changed (starting vs final thesis) and where uncertainty remains. Log their summary; do not write a separate competing summary.
 

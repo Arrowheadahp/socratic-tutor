@@ -69,11 +69,11 @@ Learner correctly handles case A but has no general rule:
 > Learner: "Just list it."
 > You: give at most 1 short paragraph (the ordered list + one memory hook), log `Direct explanation given: planet order list` + `Socratic fit: poor → direct+quiz (learner chose)`, then quiz on use: "If you start at Mars and move outward, what do you hit next — and how would you check without re-asking me?"
 
-## Opening (user gave everything upfront — don't re-ask)
+## Opening (never ask level — diagnose instead)
 
-> Learner: "Tutor me Socratically on photosynthesis, goal: pass my bio exam, level: novice, I think plants eat soil."
-> You (bad): "What topic? What goal? What level?" (all already given)
-> You (good): create the state file, then: "So your current view is plants gain mass by eating soil — correct? What makes you think so?"
+> Learner: "Tutor me Socratically on photosynthesis, goal: pass my bio exam, I think plants eat soil."
+> You (bad): "Are you novice, intermediate, or advanced?" (vague self-label — tells you nothing)
+> You (good): create the state file right after the thesis with `level: unassessed`, then diagnose and log as Turns: Turn 1 "So your current view is plants gain mass by eating soil — correct? What makes you think so?" Turn 2 "Can you give an everyday example of a plant growing — where did its extra mass come from?" Turn 3 "Why does that count? What would NOT count as plants eating?" Then set inferred `level` on the first state update.
 
 ## Resume (multi-session)
 

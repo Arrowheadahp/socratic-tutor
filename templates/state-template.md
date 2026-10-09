@@ -2,7 +2,7 @@
 topic: "Topic Name"
 slug: "topic-slug"
 goal: "learner goal in own words -- escape embedded quotes as \""
-level: novice
+level: unassessed # inferred from diagnostic probes (Turn 1-2+), never self-reported; novice | intermediate | advanced set after probes, never asked in chat
 domain: definitional # definitional | procedural (math/code/proof/step-rule) | mixed; see SKILL.md Method. If mixed, tag each Turn with D: def|proc.
 parent_slug: "" # slug of main topic if this file is a prerequisite split; empty otherwise. Never mention slugs or files in chat.
 blocked_by: "" # slug of prerequisite sub-topic blocking this file; empty when unblocked. Never mention slugs or files in chat.

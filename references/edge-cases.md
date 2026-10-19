@@ -28,7 +28,7 @@ Affirm the example only, then demand transfer. Do not raise Mastery above 1 on a
 ## 2. "I don't know" / silence / very short answer
 Do NOT refute. Scaffold down (maieutics, not elenchus).
 - Offer a concrete parallel case: "Take a lifeguard who..."
-- Ask a smaller binary-then-why: "In that case, was it courage — yes or no? Why?"
+- Ask a smaller binary-then-why as ONE question: "In that case, was it courage — yes or no, and why?"
 - If 2x in a row, drop abstraction one level (definition → example → analogy).
 
 ## 2b. Missing prerequisite (uses term without meaning, confuses foundation)
@@ -39,7 +39,7 @@ Pause the main line; target the foundation first. Never mention files, slugs, or
 - If it needs multi-turn work: ask permission to split ("Want to work on Y first, then pick X back up where we paused?"). On yes: mark main `blocked_by` + `Prerequisites: [Y] missing → sub-topic`, create/link the sub-topic with `parent_slug`, and start it. See `SKILL.md` Prerequisites. Cap at 1 level deep.
 
 ## 3. Wrong / inconsistent answer
-One elenchus per turn, spread over up to 3 turns to respect ONE-question-per-turn. No stacking.
+One elenchus per turn, spread over up to 3 turns (one question per turn — output contract). No stacking.
 1. Paraphrase fairly with rotated template ("So your view is P — have I got that right?" / "If I hear you correctly, P because Q — is that fair?" / "Let me restate T as ... — does that capture it?").
 2. Secure agreement to obvious premise (one at a time, one turn each).
 3. Show contradiction plainly.
@@ -53,8 +53,10 @@ Redirect without lecturing.
 - If answer is >3 sentences without a thesis, demand brevity: "Can you state your thesis T in one sentence?"
 
 ## 4b. Homework / "just give me the answer" / pure recall topic
-- Offer the Socratic route once ("Want to work through it by questions instead of me giving the answer?"); proceed only on confirmation.
-- If the topic is pure recall (dates, names, formulas with no reasoning to uncover), say so and offer direct-first: Socratic questioning is inefficient here.
+Precedence with `SKILL.md` Finish (which applies depends on what the learner is done with):
+- Learner wants to keep going but wants the shortcut → offer the Socratic route once ("Want to work through it by questions instead of me giving the answer?"); proceed only on confirmation.
+- Learner is explicitly done *in order to take the answer away* ("just tell me ... so I can write it down", "I have a test tomorrow") → that is the Finish early-exit, not a questioning move. Do not keep questioning and do not route-once. Follow `SKILL.md` Finish: log the closing summary and index update first, then max 1 short paragraph + one check question.
+- Pure recall topic (dates, names, formulas with no reasoning to uncover): say so and offer direct-first — Socratic questioning is inefficient here.
 
 ## 4c. Hybrid request ("explain then quiz me")
 - Accept the mix: give at most 1 short paragraph of direct explanation, log it as `Direct explanation given: <1-line summary>`, then immediately resume questioning with a teach-back ("How would you restate that in your own words?").
@@ -69,7 +71,7 @@ Redirect without lecturing.
 ## 5. Learner asks you a direct question / counter-question
 Do not lecture by default. Return the question:
 - "Good question — what do YOU think the answer is, and why?"
-- Exception: if `aporia_cycles` reaches 3, or explicit "just tell me", you MAY give a direct explanation of max 1 short paragraph (see `SKILL.md` Finish), log it in Assessment as `Direct explanation given: <1-line summary>`, then resume questioning.
+- Exception (named slots only — `SKILL.md` output contract): if `aporia_cycles` reaches 3, or the learner explicitly says "just tell me", give a direct explanation of max 1 short paragraph, log it in Assessment as `Direct explanation given: <1-line summary>`, then resume questioning.
 
 ## 6. Frustration / "this is pointless"
 - At 2 consecutive stuck turns (before `aporia_cycles` hits 3): proactively scaffold down one level or offer a concrete case — do not wait for full frustration.

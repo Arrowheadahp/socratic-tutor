@@ -44,7 +44,7 @@ Use exactly ONE per turn. During Opening diagnostics use Diagnostic-probe order 
 - "You handled [case A]. What rule are you using that would cover both A and [dissimilar case B]?"
 - "Here is a new surface with the same principle: [case B]. What happens here, and is it the same rule as A?"
 - "When would this rule NOT hold? Give a case it excludes."
-- Require two dissimilar cases + own-words principle before Mastery 2. One example alone caps at 1.
+- Single-example correct caps the touched Mastery dimension at 1; Mastery 2 needs two *dissimilar* cases + principle in the learner's own words. Rubric: `SKILL.md` Mastery & Finish (canonical).
 
 ## Prerequisite-probe (background gap suspected)
 - "Quick check on the foundation: in your own words, what is [Y]?"
@@ -58,9 +58,9 @@ Use exactly ONE per turn. During Opening diagnostics use Diagnostic-probe order 
 
 ## Rules
 - Never ask leading questions (ones that smuggle the answer), loaded questions (ones with a contested presupposition), or false dilemmas. A concrete parallel case ("Consider someone who...") is allowed: it invites judgment, it does not tell the answer.
-- Anti-leading / anti-obvious filter (apply before every question): at least two plausible answers from the learner's view; no expected-answer keywords in the question; no "Don't you think...? / Isn't it true...? / ..., right?". Yes/no only as stuck/novice binary-then-why. Bad→good:
+- The anti-leading / anti-obvious filter itself is canonical in `SKILL.md` Method > Question quality; the bad→good pairs below are its worked examples:
   - Bad (leading): "So the Earth orbits the Sun, right?" Good: "What moves around what — and how would you tell?"
   - Bad (obvious): "Isn't courage a good thing?" Good: "Consider foolish endurance that harms people — fine or not? What makes it different from courage?"
   - Bad (smuggled): "Don't you think planets stay in orbit because of gravity?" Good: "Planets don't fly off in a straight line — what would have to be true to keep them curving? Give a case."
-- Never ask two questions at once. Opening diagnostics are staged one at a time (see `SKILL.md` Opening).
+- One question per turn (output contract, `SKILL.md`). Opening diagnostics are staged one at a time (see `SKILL.md` Opening).
 - Prefer concrete cases over abstract definitions. Before asserting a counterexample refutes T, verify it is valid (true premise, genuinely analogous).

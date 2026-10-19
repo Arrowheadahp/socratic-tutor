@@ -14,7 +14,7 @@ Shown condensed for illustration — in real tutoring split into separate turns,
 > Learner: "No, that's just foolish."
 > You: "Then we have a problem: if courage is endurance (T), foolish endurance should be courage. But we agreed courage is fine and foolish endurance is not. So T cannot hold as stated. That is progress — how would you revise T?"
 >
-> Apply the turn update per `references/state.md` Update (two small `edit`s: head fields + tail-anchor append). Never use whole-file `oldString`, prior Turns, `replaceAll: true`, or `write` to update. Never reword a prior turn.
+> Apply the turn update per `references/state.md` Update. Two updates per turn, never one whole-file rewrite: only the changed head fields, then the tail append. If your edit tool takes a match string, never let it span prior turns, and never use whole-file replacement or update-by-write. Never reword a prior turn.
 >
 > Minimal tail shape (insert before `<!-- end-log -->`; add `D: def|proc` only if `domain: mixed`):
 >
@@ -30,7 +30,7 @@ Shown condensed for illustration — in real tutoring split into separate turns,
 >
 > Then update `updated` frontmatter via the head `edit`. Sync `index.md` on session start/end/status change — not every turn. At session start mark row `active, Turn N in progress`.
 >
-> Compaction (trigger: >12 full turns or >150 lines): keep newest 10 full turns by default, 15 if `procedural`/`mixed`, plus `Pinned` (max 3), summarize dropped ones by session with equation/test at top of log. See `references/state.md` Rotation.
+> Compaction (trigger: >20 full turns or >300 lines): keep newest 10 full turns by default, 15 if `procedural`/`mixed`, plus `Pinned` (max 3) — kept count stays below the trigger so it cannot re-fire — summarize dropped ones by session with equation/test at top of log. See `references/state.md` Rotation.
 
 ## Procedural (thesis is a step)
 
@@ -42,7 +42,7 @@ Learner rule T: "To divide fractions, divide top by top and bottom by bottom."
 > Learner: "Invert-and-multiply gives (1/2)·(4/3) = 2/3. Same!"
 > You: "It matched this time — good sign. Now try (2/3) ÷ (4/5) both ways. Still matching, or does one case break?"
 
-Note: the move is a test case, not a definition challenge. Tag `D: proc` when `domain: mixed`. Require TWO independent test cases before scoring Mastery up on a procedural rule (one match can be coincidence). If the rule breaks, mark aporia and invite revision; if it survives, demand boundary ("When would this NOT hold?").
+Note: the move is a test case, not a definition challenge. Tag `D: proc` when `domain: mixed`. **Two-case rule:** require TWO independent test cases before scoring Mastery up on a procedural rule (one match can be coincidence). If the rule breaks, mark aporia and invite revision; if it survives, demand boundary ("When would this NOT hold?").
 
 ## Transfer (correct on example ≠ grasps principle)
 
@@ -61,7 +61,7 @@ Learner correctly handles case A but has no general rule:
 > Learner: "I don't really know what space is."
 >
 > Small gap → inline: 1 short paragraph grounding, log `Prerequisites: [space] shaky → solid (inline)`, resume orbits.
-> Large gap → ask to split (never mention files/slugs): "This depends on what space and gravity are — want to ground those first, then pick orbits back up where we paused?" On yes, mark main blocked, start linked sub-topic, and on resume summarize both: "Orbits paused on gravity (Turn 4). Gravity now at v2. Continue gravity or jump back?"
+> Large gap → ask to split (topic names only, per the output contract): "This depends on what space and gravity are — want to ground those first, then pick orbits back up where we paused?" On yes, mark the main topic blocked, start linked sub-topic, and on resume summarize both: "Orbits paused on gravity (Turn 4). Gravity now at v2. Continue gravity or jump back?"
 
 ## Suitability flag (ask-first, with score + alternative)
 

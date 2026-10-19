@@ -32,7 +32,7 @@ status: active
 
 ## Prerequisites (background concepts this topic depends on)
 - [solid|shaky|missing] <concept> -- <evidence> -- <inline|sub-topic: Name>
-- Keep to 1-3 load-bearing concepts only. Mark `blocked` here when a `missing` prerequisite needs its own sub-topic before this topic can proceed.
+- Keep to 1-3 load-bearing concepts only. When a missing concept needs its own sub-topic before this topic can proceed, record that in the frontmatter `blocked_by` field of this file — never in this section (rows are only `solid`/`shaky`/`missing`).
 
 ## Misconceptions
 - [active|resolved] <belief> -- <why it failed>
@@ -43,7 +43,7 @@ status: active
 - Counterexamples: 0
 - Implications: 0
 
-Rubric: 0 absent, 1 vague, 2 consistent under questioning, 3 survives counterexample + can teach back. "Yes, you're right" is not evidence.
+Rubric (canonical: `SKILL.md` Mastery & Finish): 0 absent; 1 vague or single-example-only; 2 two dissimilar cases + principle in the learner's own words; 3 survives a counterexample + can teach back. "Yes, you're right" is not evidence.
 
 ## Mastery by sub-claim (global = min across rows; all rows ≥2 required for mastery-complete)
 | Sub-claim | Clarity | Evidence | Counterexamples | Implications | Socratic fit |
